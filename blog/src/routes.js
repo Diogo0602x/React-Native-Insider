@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from  '@react-navigation/native-stack';
 
 import Home from './pages/Home';
 import Detail from './pages/Detail';
-import CategoryPosts from './pages/CategoryPosts';
+import Category from './pages/CategoryPosts';
 import Search from './pages/Search';
 
 const Stack = createNativeStackNavigator();
@@ -30,8 +30,8 @@ function Routes(){
                 }}
             />
             <Stack.Screen
-                name='CategoryPosts'
-                component={CategoryPosts}
+                name='Category'
+                component={Category}
                 options={{
                     headerTintColor: '#fff',
                     headerStyle:{
