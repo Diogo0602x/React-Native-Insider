@@ -6,6 +6,7 @@ import { Feather } from '@expo/vector-icons';
 import api from '../../services/api';
 
 import CategoryItem from '../../components/CategoryItem';
+import { getFavorite, setFavorite } from '../../services/favorite';
 
 export default function Home(){
     const navigation = useNavigation();
@@ -19,6 +20,14 @@ export default function Home(){
 
         loadData();
     }, [])
+
+    // Favoritanto uma categoria
+    async function handleFavorite(id){
+        const response = await setFavorite(id);
+
+        console.log(response);
+        alert('Categoria favoritada com sucesso!');
+    }
 
     return(
         <SafeAreaView style={styles.container}>
@@ -41,6 +50,7 @@ export default function Home(){
                 renderItem={ ({ item }) => (
                     <CategoryItem
                         data={item}
+                        favorite={ () => handleFavorite(item.id) }
                     />
                 )}
             />
