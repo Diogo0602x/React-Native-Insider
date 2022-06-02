@@ -34,7 +34,7 @@
       "target": "api::category.category",
       "inversedBy": "posts"
     },
-    "Opcoes": {
+    "opcoes": {
       "type": "dynamiczone",
       "components": [
         "post.link"
