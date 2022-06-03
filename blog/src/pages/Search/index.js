@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList, Keyboard } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
 import api from '../../services/api';
@@ -8,6 +8,7 @@ import PostItem from '../../components/PostItem';
 export default function Search(){
     const [input, setInput] = useState('');
     const [posts, setPosts] = useState([]);
+    const [empty, setEmpty] = useState(false);
 
     async function handleSearchPost(){
         if(input === '') {
@@ -17,7 +18,16 @@ export default function Search(){
 
         const response = await api.get(`api/posts?filters[title][$containsi]=${input}&populate=cover`);
 
+        if(response.data?.data.length === 0){
+            setEmpty(true);
+            setPosts([]);
+            return;
+        }
+
         setPosts(response.data?.data);
+        setEmpty(false);
+        setInput('');
+        Keyboard.dismiss();
     }
 
     return(
@@ -36,6 +46,12 @@ export default function Search(){
                 </TouchableOpacity>
 
             </View>
+
+            {empty && (
+                <View>
+                    <Text style={styles.emptyText}>Não encontramos nenhum post...</Text>
+                </View>
+            )}
 
             <FlatList
                 style={{flex: 1}}
@@ -81,5 +97,8 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 4,
         borderBottomLeftRadius: 4,
         marginLeft: -1
+    },
+    emptyText:{
+        textAlign: 'center',
     }
 })
