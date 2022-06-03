@@ -10,6 +10,10 @@ import { getFavorite, setFavorite } from '../../services/favorite';
 import FavoritePost, { favoritePost } from '../../components/FavoritePost';
 import PostItem from  '../../components/PostItem';
 
+import * as Animatable from 'react-native-animatable';
+
+const FlatListAnimated = Animatable.createAnimatableComponent(FlatList);
+
 export default function Home(){
     const navigation = useNavigation();
     const [categories, setCategories] = useState([]);
@@ -59,14 +63,16 @@ export default function Home(){
         <SafeAreaView style={styles.container}>
             
             <View style={styles.header}>
-                <Text style={styles.name}>Dev Blog</Text>
+                <Animatable.Text style={styles.name} animation='fadeInLeft'>Dev Blog</Animatable.Text>
 
                 <TouchableOpacity onPress={() => navigation.navigate('Search')}>
                     <Feather name="search" size={24} color="#fff" />
                 </TouchableOpacity>
             </View>
 
-            <FlatList
+            <FlatListAnimated
+                animation='flipInX'
+                delay={500}
                 showsHorizontalScrollIndicator={false}
                 horizontal={true}
                 contentContainerStyle={{paddingRight: 12}}
